@@ -8,6 +8,7 @@ import net.borisshoes.arcananovum.achievements.ArcanaAchievements;
 import net.borisshoes.arcananovum.augments.ArcanaAugments;
 import net.borisshoes.arcananovum.blocks.GeomanticStele;
 import net.borisshoes.arcananovum.blocks.GeomanticSteleBlockEntity;
+import net.borisshoes.arcananovum.core.ArcanaItem;
 import net.borisshoes.arcananovum.core.ArcanaRarity;
 import net.borisshoes.arcananovum.core.EnergyItem;
 import net.borisshoes.arcananovum.core.polymer.ArcanaPolymerItem;
@@ -15,6 +16,7 @@ import net.borisshoes.arcananovum.events.CleansingCharmEvent;
 import net.borisshoes.arcananovum.gui.arcanetome.ArcaneTomeGui;
 import net.borisshoes.arcananovum.research.ResearchTasks;
 import net.borisshoes.arcananovum.utils.ArcanaItemUtils;
+import net.borisshoes.borislib.BorisLib;
 import net.borisshoes.borislib.conditions.ConditionInstance;
 import net.borisshoes.borislib.conditions.Conditions;
 import net.borisshoes.borislib.events.Event;
@@ -56,10 +58,8 @@ import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static net.borisshoes.arcananovum.ArcanaNovum.MOD_ID;
@@ -149,7 +149,7 @@ public class CleansingCharm extends EnergyItem implements GeomanticStele.Interac
          if(ArcanaAugments.getAugmentOnItem(stack, ArcanaAugments.REJUVENATION) > 0){
             int duration = ArcanaNovum.CONFIG.getInt(ArcanaConfig.CLEANSING_CHARM_REJUVENATION_DURATION);
             float hpPerTick = ArcanaNovum.CONFIG.getFloat(ArcanaConfig.CLEANSING_CHARM_REJUVENATION_HEALTH_PER_TICK);
-            ConditionInstance rejuv = new ConditionInstance(Conditions.REJUVENATION, arcanaId(ArcanaRegistry.CLEANSING_CHARM.getId()), duration, hpPerTick, true, true, false, AttributeModifier.Operation.ADD_VALUE, ArcanaItem.getUUID(stack));
+            ConditionInstance rejuv = new ConditionInstance(Conditions.REJUVENATION, arcanaId(ArcanaRegistry.CLEANSING_CHARM.getId() + "." + ArcanaItem.getUUID(stack)), duration, hpPerTick, true, true, false, AttributeModifier.Operation.ADD_VALUE, living.getUUID());
             Conditions.addCondition(living.level().getServer(), living, rejuv);
          }
          
